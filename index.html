@@ -4,57 +4,300 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Audit-Check Escobar: Fuga Operativa</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body { font-family: 'Arial', sans-serif; background-color: #f4f7f6; padding: 20px; }
-        .calculadora-container { background: #ffffff; padding: 30px; border-radius: 10px; max-width: 500px; margin: 0 auto; box-shadow: 0px 4px 10px rgba(0,0,0,0.1); border-top: 5px solid #d9381e; }
-        h2 { color: #2c3e50; text-align: center; }
-        label { font-weight: bold; color: #34495e; display: block; margin-top: 15px; }
-        input { width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #bdc3c7; border-radius: 5px; box-sizing: border-box; font-size: 16px; }
-        button { width: 100%; padding: 15px; margin-top: 25px; background-color: #d9381e; color: white; border: none; border-radius: 5px; font-size: 18px; font-weight: bold; cursor: pointer; transition: 0.3s; }
-        button:hover { background-color: #b02a16; }
-        .resultado { margin-top: 25px; padding: 20px; background-color: #fcece9; border-left: 5px solid #d9381e; display: none; }
-        .resultado h3 { margin-top: 0; color: #c0392b; }
-        .alerta-roja { font-size: 18px; font-weight: bold; color: #c0392b; }
-        .btn-whatsapp { display: block; text-align: center; background-color: #25D366; color: white; padding: 15px; margin-top: 20px; text-decoration: none; border-radius: 5px; font-weight: bold; font-size: 16px; transition: 0.3s; }
-        .btn-whatsapp:hover { background-color: #1ebe5d; }
-        .nota-auditor { font-size: 13px; color: #7f8c8d; font-style: italic; margin-top: 25px; text-align: justify; border-top: 1px solid #eee; padding-top: 15px; }
+        :root {
+            /* Paleta de Colores Corporativos Premium B2B */
+            --bg-body: #f0f2f5;          /* Gris muy claro de fondo tecnológico */
+            --bg-card: #ffffff;          /* Blanco puro para las tarjetas */
+            --primary-navy: #1a2a40;     /* Azul Marino Profundo (Confianza, Autoridad) */
+            --primary-red: #d9381e;      /* Rojo de Alerta y Acción (Tus botones actuales) */
+            --text-main: #2c3e50;         /* Gris oscuro para el texto principal */
+            --text-secondary: #7f8c8d;   /* Gris medio para el texto secundario */
+            --accent-green: #2ecc71;     /* Verde de WhatsApp y Crecimiento */
+            --border-color: #e1e8ed;     /* Borde suave para las tarjetas */
+        }
+
+        body { 
+            font-family: 'Inter', 'Segoe UI', Arial, sans-serif; 
+            background-color: var(--bg-body); 
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .calculadora-container { 
+            background: var(--bg-card); 
+            padding: 40px; 
+            border-radius: 16px; 
+            max-width: 550px; 
+            width: 100%;
+            box-shadow: 0px 8px 30px rgba(0,0,0,0.06); /* Sombra suave y moderna */
+            border-top: 6px solid var(--primary-navy); /* El toque corporativo superior */
+            transition: 0.3s;
+        }
+
+        h2 { 
+            color: var(--primary-navy); 
+            text-align: center; 
+            margin-top: 0;
+            font-size: 28px;
+            letter-spacing: -0.5px;
+            font-weight: 800;
+        }
+
+        .subtitle { 
+            text-align: center; 
+            color: var(--text-secondary); 
+            font-size: 16px;
+            margin-bottom: 30px;
+        }
+
+        /* Estilización de los Inputs con Íconos */
+        .input-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        label { 
+            font-weight: 600; 
+            color: var(--primary-navy); 
+            display: block; 
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .input-with-icon {
+            position: relative;
+        }
+
+        .input-with-icon i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+            font-size: 18px;
+        }
+
+        input { 
+            width: 100%; 
+            padding: 12px 15px 12px 45px; /* Padding izquierdo para el ícono */
+            border: 2px solid var(--border-color); 
+            border-radius: 8px; 
+            box-sizing: border-box; 
+            font-size: 16px; 
+            color: var(--text-main);
+            transition: 0.3s;
+        }
+
+        input:focus {
+            border-color: var(--primary-red);
+            outline: none;
+            box-shadow: 0 0 10px rgba(217, 56, 30, 0.1);
+        }
+
+        /* Botón de Acción Principal */
+        .btn-audit { 
+            width: 100%; 
+            padding: 18px; 
+            margin-top: 25px; 
+            background-color: var(--primary-red); 
+            color: white; 
+            border: none; 
+            border-radius: 8px; 
+            font-size: 18px; 
+            font-weight: 700; 
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer; 
+            transition: 0.3s; 
+            box-shadow: 0px 4px 15px rgba(217, 56, 30, 0.2);
+        }
+
+        .btn-audit:hover { 
+            background-color: #b02a16; 
+            transform: translateY(-2px);
+            box-shadow: 0px 6px 20px rgba(217, 56, 30, 0.3);
+        }
+
+        /* --- Estilo de los Resultados tipo Dashboard --- */
+        .resultado { 
+            margin-top: 35px; 
+            padding: 25px; 
+            background-color: var(--bg-body); 
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            display: none; /* Se activa con JS */
+        }
+
+        .resultado h3 { 
+            margin-top: 0; 
+            color: var(--primary-red); 
+            font-size: 22px;
+            font-weight: 800;
+            text-align: center;
+            border-bottom: 2px solid rgba(217, 56, 30, 0.1);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .resultado p {
+            margin: 12px 0;
+            font-size: 16px;
+            color: var(--text-main);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .resultado strong {
+            color: var(--primary-navy);
+            font-weight: 700;
+        }
+
+        .fuga-total-box {
+            margin-top: 25px;
+            background-color: rgba(217, 56, 30, 0.08); /* Fondo suave rojo de alerta */
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid rgba(217, 56, 30, 0.15);
+            text-align: center;
+        }
+
+        .alerta-roja { 
+            font-size: 24px; 
+            font-weight: 800; 
+            color: var(--primary-red); 
+            margin: 0;
+            letter-spacing: -1px;
+        }
+
+        .gratis-msg {
+            font-size: 18px;
+            color: var(--text-main);
+            margin-top: 15px;
+        }
+
+        .piezas-gratis-num {
+            color: var(--primary-red);
+            font-size: 28px;
+            font-weight: 900;
+        }
+
+        /* Botón de WhatsApp Premium */
+        .btn-whatsapp { 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            text-align: center; 
+            background-color: var(--accent-green); 
+            color: white; 
+            padding: 18px; 
+            margin-top: 30px; 
+            text-decoration: none; 
+            border-radius: 8px; 
+            font-size: 17px; 
+            font-weight: 700; 
+            transition: 0.3s; 
+            box-shadow: 0px 4px 15px rgba(46, 204, 113, 0.2);
+        }
+
+        .btn-whatsapp:hover { 
+            background-color: #1ebe5d; 
+            transform: translateY(-2px);
+            box-shadow: 0px 6px 20px rgba(46, 204, 113, 0.3);
+        }
+
+        /* Nota del Auditor Estilizada */
+        .nota-auditor { 
+            font-size: 13px; 
+            color: var(--text-secondary); 
+            font-style: italic; 
+            margin-top: 30px; 
+            text-align: justify; 
+            border-top: 2px solid var(--border-color); 
+            padding-top: 20px; 
+            position: relative;
+        }
+        
+        .nota-auditor::before {
+            content: "\f0a9"; /* Ícono de flecha FontAwesome */
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            left: -20px;
+            top: 20px;
+            color: var(--primary-red);
+        }
+
     </style>
 </head>
 <body>
 
 <div class="calculadora-container">
-    <h2>📊 Escáner de Rentabilidad</h2>
-    <p style="text-align: center; color: #7f8c8d;">Solo 4 datos para conocer tu realidad operativa.</p>
+    <h2>📊 Audit-Check Escobar</h2>
+    <p class="subtitle">Solo 4 datos clave para diagnosticar la salud operativa de su patio.</p>
 
-    <label>1. Valor Promedio Facturado por Pieza (COP):</label>
-    <input type="number" id="vpp" placeholder="Ej: 400000">
+    <div class="input-group">
+        <label>1. Valor Facturado por Pieza (COP):</label>
+        <div class="input-with-icon">
+            <i class="fas fa-money-bill-wave"></i>
+            <input type="number" id="vpp" placeholder="Ej: 400000">
+        </div>
+    </div>
 
-    <label>2. Número de piezas REPROCESADAS al mes:</label>
-    <input type="number" id="reprocesos" placeholder="Ej: 15">
+    <div class="input-group">
+        <label>2. Número de Piezas REPROCESADAS (al mes):</label>
+        <div class="input-with-icon">
+            <i class="fas fa-car-crash"></i>
+            <input type="number" id="reprocesos" placeholder="Ej: 15">
+        </div>
+    </div>
 
-    <label>3. Costo Promedio del Kit de Material por pieza (COP):</label>
-    <input type="number" id="costoMaterial" placeholder="Ej: 120000">
+    <div class="input-group">
+        <label>3. Costo del Kit de Material por Pieza (COP):</label>
+        <div class="input-with-icon">
+            <i class="fas fa-paint-brush"></i>
+            <input type="number" id="costoMaterial" placeholder="Ej: 120000">
+        </div>
+    </div>
 
-    <label>4. Valor promedio de la Hora/Hombre (COP):</label>
-    <input type="number" id="horaHombre" placeholder="Ej: 20000">
+    <div class="input-group">
+        <label>4. Valor promedio de la Hora/Hombre (COP):</label>
+        <div class="input-with-icon">
+            <i class="fas fa-stopwatch"></i>
+            <input type="number" id="horaHombre" placeholder="Ej: 20000">
+        </div>
+    </div>
 
-    <button onclick="calcularFuga()">AUDITAR MI TALLER 🔎</button>
+    <button class="btn-audit" onclick="calcularFuga()">DIAGNOSTICAR RENTABILIDAD 🔎</button>
 
     <div class="resultado" id="cajaResultado">
-        <h3>🚨 Resultados del Auditor:</h3>
-        <p><strong>Fuga en Materiales:</strong> $ <span id="resMaterial"></span></p>
-        <p><strong>Mano de Obra Perdida:</strong> $ <span id="resManoObra"></span> (Basado en 3 hrs por pieza)</p>
-        <p><strong>Lucro Cesante (Cabina Ocupada):</strong> $ <span id="resLucro"></span></p>
-        <hr>
-        <p class="alerta-roja">FUGA DE CAPITAL TOTAL: $ <span id="resFugaTotal"></span></p>
-        <p style="font-size: 16px;"><em>Para recuperar este dinero perdido, tu equipo tendrá que trabajar GRATIS pintando <strong id="piezasGratis" style="color:red; font-size: 20px;"></strong> piezas nuevas.</em></p>
+        <h3>🚨 RESULTADOS DEL DIAGNÓSTICO:</h3>
+        
+        <p><span>Fuga Directa en Materiales:</span> <strong>$ <span id="resMaterial"></span></strong></p>
+        <p><span>Costo en Mano de Obra Perdida:</span> <strong>$ <span id="resManoObra"></span> (Basado en 3 hrs/reproceso)</strong></p>
+        <p><span>Lucro Cesante (Cabina Inmóvil):</span> <strong>$ <span id="resLucro"></span></strong></p>
+        
+        <div class="fuga-total-box">
+            <p style="justify-content: center; color: var(--primary-navy); font-weight: 700;">FUGA OPERATIVA DE CAPITAL:</p>
+            <p class="alerta-roja">$ <span id="resFugaTotal"></span> COP</p>
+            <p class="gratis-msg">Su equipo deberá trabajar <strong class="piezas-gratis-num" id="piezasGratis"></strong> piezas nuevas GRATIS este mes para recuperar este dinero.</p>
+        </div>
         
         <a href="#" id="btnWhatsApp" class="btn-whatsapp" target="_blank">
-            🚨 Hablar con el Auditor (WhatsApp)
+            <i class="fab fa-whatsapp"></i>
+            🚨 Detener Fuga Operativa con el Auditor
         </a>
 
         <p class="nota-auditor">
-            <strong>Nota del Auditor:</strong> Este cálculo es una proyección matemática conservadora basada en costos operativos directos. No incluye variables críticas como el consumo energético (gas/electricidad), el desgaste administrativo, ni el impacto en la satisfacción del cliente final. El costo real de la ineficiencia en su taller es, con seguridad, superior al reflejado en este escaneo inicial.
+            <strong>Nota del Auditor (Visión Global):</strong> Este cálculo es una proyección matemática conservadora. No incluye variables críticas como el consumo energético (gas/electricidad) del quemador, el desgaste administrativo, ni el impacto en la satisfacción final del cliente. El costo real de la ineficiencia es, con seguridad, superior al reflejado aquí.
         </p>
     </div>
 </div>
@@ -73,16 +316,20 @@
         let fugaTotal = perdidaMateriales + perdidaManoObra + lucroCesante;
         let piezasATrabajarGratis = Math.ceil(fugaTotal / (vpp || 1)); 
 
-        document.getElementById('resMaterial').innerText = perdidaMateriales.toLocaleString('es-CO');
-        document.getElementById('resManoObra').innerText = perdidaManoObra.toLocaleString('es-CO');
-        document.getElementById('resLucro').innerText = lucroCesante.toLocaleString('es-CO');
-        document.getElementById('resFugaTotal').innerText = fugaTotal.toLocaleString('es-CO');
+        // Formateo de números a moneda COP
+        const formatoCOP = new Intl.NumberFormat('es-CO');
+
+        document.getElementById('resMaterial').innerText = formatoCOP.format(perdidaMateriales);
+        document.getElementById('resManoObra').innerText = formatoCOP.format(perdidaManoObra);
+        document.getElementById('resLucro').innerText = formatoCOP.format(lucroCesante);
+        document.getElementById('resFugaTotal').innerText = formatoCOP.format(fugaTotal);
         document.getElementById('piezasGratis').innerText = piezasATrabajarGratis;
 
+        // --- MAGIA DE WHATSAPP ---
         // CAMBIA EL 573000000000 POR TU NÚMERO REAL
         let numeroWhatsApp = "573227151050"; 
         
-        let mensajeFormateado = "Hola Jhon Edward, acabo de usar tu Audit-Check y mi fuga mensual calculada es de $" + fugaTotal.toLocaleString('es-CO') + " COP. Necesito ayuda para frenar este desangre en mi taller.";
+        let mensajeFormateado = "Hola Jhon Edward, acabo de usar tu 'Audit-Check Escobar' y mi fuga mensual calculada es de $" + formatoCOP.format(fugaTotal) + " COP. Necesito ayuda para frenar este desangre en mi taller de colisión.";
         let urlWhatsApp = "https://wa.me/" + numeroWhatsApp + "?text=" + encodeURIComponent(mensajeFormateado);
         
         document.getElementById('btnWhatsApp').href = urlWhatsApp;
