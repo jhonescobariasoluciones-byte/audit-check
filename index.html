@@ -8,14 +8,14 @@
     <style>
         :root {
             /* Paleta de Colores Corporativos Premium B2B */
-            --bg-body: #f0f2f5;          /* Gris muy claro de fondo tecnológico */
-            --bg-card: #ffffff;          /* Blanco puro para las tarjetas */
-            --primary-navy: #1a2a40;     /* Azul Marino Profundo (Confianza, Autoridad) */
-            --primary-red: #d9381e;      /* Rojo de Alerta y Acción (Tus botones actuales) */
-            --text-main: #2c3e50;         /* Gris oscuro para el texto principal */
-            --text-secondary: #7f8c8d;   /* Gris medio para el texto secundario */
-            --accent-green: #2ecc71;     /* Verde de WhatsApp y Crecimiento */
-            --border-color: #e1e8ed;     /* Borde suave para las tarjetas */
+            --bg-body: #f0f2f5;          
+            --bg-card: #ffffff;          
+            --primary-navy: #1a2a40;     
+            --primary-red: #d9381e;      
+            --text-main: #2c3e50;         
+            --text-secondary: #7f8c8d;   
+            --accent-green: #2ecc71;     
+            --border-color: #e1e8ed;     
         }
 
         body { 
@@ -36,8 +36,8 @@
             border-radius: 16px; 
             max-width: 550px; 
             width: 100%;
-            box-shadow: 0px 8px 30px rgba(0,0,0,0.06); /* Sombra suave y moderna */
-            border-top: 6px solid var(--primary-navy); /* El toque corporativo superior */
+            box-shadow: 0px 8px 30px rgba(0,0,0,0.06); 
+            border-top: 6px solid var(--primary-navy); 
             transition: 0.3s;
         }
 
@@ -57,7 +57,6 @@
             margin-bottom: 30px;
         }
 
-        /* Estilización de los Inputs con Íconos */
         .input-group {
             margin-bottom: 20px;
             position: relative;
@@ -86,7 +85,7 @@
 
         input { 
             width: 100%; 
-            padding: 12px 15px 12px 45px; /* Padding izquierdo para el ícono */
+            padding: 12px 15px 12px 45px; 
             border: 2px solid var(--border-color); 
             border-radius: 8px; 
             box-sizing: border-box; 
@@ -101,7 +100,6 @@
             box-shadow: 0 0 10px rgba(217, 56, 30, 0.1);
         }
 
-        /* Botón de Acción Principal */
         .btn-audit { 
             width: 100%; 
             padding: 18px; 
@@ -125,14 +123,13 @@
             box-shadow: 0px 6px 20px rgba(217, 56, 30, 0.3);
         }
 
-        /* --- Estilo de los Resultados tipo Dashboard --- */
         .resultado { 
             margin-top: 35px; 
             padding: 25px; 
             background-color: var(--bg-body); 
             border-radius: 12px;
             border: 1px solid var(--border-color);
-            display: none; /* Se activa con JS */
+            display: none; 
         }
 
         .resultado h3 { 
@@ -162,7 +159,7 @@
 
         .fuga-total-box {
             margin-top: 25px;
-            background-color: rgba(217, 56, 30, 0.08); /* Fondo suave rojo de alerta */
+            background-color: rgba(217, 56, 30, 0.08); 
             padding: 20px;
             border-radius: 10px;
             border: 2px solid rgba(217, 56, 30, 0.15);
@@ -189,7 +186,6 @@
             font-weight: 900;
         }
 
-        /* Botón de WhatsApp Premium */
         .btn-whatsapp { 
             display: flex;
             justify-content: center;
@@ -214,26 +210,37 @@
             box-shadow: 0px 6px 20px rgba(46, 204, 113, 0.3);
         }
 
-        /* Nota del Auditor Estilizada */
+        /* Nota del Auditor Estilizada y Corregida */
         .nota-auditor { 
-            font-size: 13px; 
+            font-size: 14px; 
             color: var(--text-secondary); 
-            font-style: italic; 
-            margin-top: 30px; 
-            text-align: justify; 
-            border-top: 2px solid var(--border-color); 
-            padding-top: 20px; 
-            position: relative;
+            margin-top: 35px; 
+            background-color: rgba(26, 42, 64, 0.05); 
+            padding: 20px; 
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-navy); 
+            line-height: 1.6; 
         }
         
-        .nota-auditor::before {
-            content: "\f0a9"; /* Ícono de flecha FontAwesome */
+        .nota-auditor strong {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary-navy);
+            margin-bottom: 10px; 
+            font-size: 15px;
+        }
+
+        .nota-auditor strong::before {
+            content: "\f0a9"; 
             font-family: 'Font Awesome 6 Free';
             font-weight: 900;
-            position: absolute;
-            left: -20px;
-            top: 20px;
             color: var(--primary-red);
+        }
+
+        .nota-auditor p {
+             margin: 0; 
+             text-align: justify;
         }
 
     </style>
@@ -296,9 +303,10 @@
             🚨 Detener Fuga Operativa con el Auditor
         </a>
 
-        <p class="nota-auditor">
-            <strong>Nota del Auditor (Visión Global):</strong> Este cálculo es una proyección matemática conservadora. No incluye variables críticas como el consumo energético (gas/electricidad) del quemador, el desgaste administrativo, ni el impacto en la satisfacción final del cliente. El costo real de la ineficiencia es, con seguridad, superior al reflejado aquí.
-        </p>
+        <div class="nota-auditor">
+            <strong>Nota del Auditor (Visión Global):</strong> 
+            <p>Este cálculo es una proyección matemática conservadora. No incluye variables críticas como el consumo energético (gas/electricidad) del quemador, el desgaste administrativo, ni el impacto en la satisfacción final del cliente. El costo real de la ineficiencia es, con seguridad, superior al reflejado aquí.</p>
+        </div>
     </div>
 </div>
 
@@ -316,7 +324,6 @@
         let fugaTotal = perdidaMateriales + perdidaManoObra + lucroCesante;
         let piezasATrabajarGratis = Math.ceil(fugaTotal / (vpp || 1)); 
 
-        // Formateo de números a moneda COP
         const formatoCOP = new Intl.NumberFormat('es-CO');
 
         document.getElementById('resMaterial').innerText = formatoCOP.format(perdidaMateriales);
@@ -325,8 +332,7 @@
         document.getElementById('resFugaTotal').innerText = formatoCOP.format(fugaTotal);
         document.getElementById('piezasGratis').innerText = piezasATrabajarGratis;
 
-        // --- MAGIA DE WHATSAPP ---
-        // CAMBIA EL 573000000000 POR TU NÚMERO REAL
+        // TU NÚMERO ACTUALIZADO (Con indicativo 57)
         let numeroWhatsApp = "573227151050"; 
         
         let mensajeFormateado = "Hola Jhon Edward, acabo de usar tu 'Audit-Check Escobar' y mi fuga mensual calculada es de $" + formatoCOP.format(fugaTotal) + " COP. Necesito ayuda para frenar este desangre en mi taller de colisión.";
