@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audit-Check Escobar: Fuga Operativa</title>
+    <style>
+        body { font-family: 'Arial', sans-serif; background-color: #f4f7f6; padding: 20px; }
+        .calculadora-container { background: #ffffff; padding: 30px; border-radius: 10px; max-width: 500px; margin: 0 auto; box-shadow: 0px 4px 10px rgba(0,0,0,0.1); border-top: 5px solid #d9381e; }
+        h2 { color: #2c3e50; text-align: center; }
+        label { font-weight: bold; color: #34495e; display: block; margin-top: 15px; }
+        input { width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #bdc3c7; border-radius: 5px; box-sizing: border-box; font-size: 16px; }
+        button { width: 100%; padding: 15px; margin-top: 25px; background-color: #d9381e; color: white; border: none; border-radius: 5px; font-size: 18px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        button:hover { background-color: #b02a16; }
+        .resultado { margin-top: 25px; padding: 20px; background-color: #fcece9; border-left: 5px solid #d9381e; display: none; }
+        .resultado h3 { margin-top: 0; color: #c0392b; }
+        .alerta-roja { font-size: 18px; font-weight: bold; color: #c0392b; }
+        .btn-whatsapp { display: block; text-align: center; background-color: #25D366; color: white; padding: 15px; margin-top: 20px; text-decoration: none; border-radius: 5px; font-weight: bold; font-size: 16px; transition: 0.3s; }
+        .btn-whatsapp:hover { background-color: #1ebe5d; }
+    </style>
+</head>
+<body>
+
+<div class="calculadora-container">
+    <h2>📊 Escáner de Rentabilidad</h2>
+    <p style="text-align: center; color: #7f8c8d;">Solo 4 datos para conocer tu realidad operativa.</p>
+
+    <label>1. Valor Promedio Facturado por Pieza (COP):</label>
+    <input type="number" id="vpp" placeholder="Ej: 400000">
+
+    <label>2. Número de piezas REPROCESADAS al mes:</label>
+    <input type="number" id="reprocesos" placeholder="Ej: 15">
+
+    <label>3. Costo Promedio del Kit de Material por pieza (COP):</label>
+    <input type="number" id="costoMaterial" placeholder="Ej: 120000">
+
+    <label>4. Valor promedio de la Hora/Hombre (COP):</label>
+    <input type="number" id="horaHombre" placeholder="Ej: 20000">
+
+    <button onclick="calcularFuga()">AUDITAR MI TALLER 🔎</button>
+
+    <div class="resultado" id="cajaResultado">
+        <h3>🚨 Resultados del Auditor:</h3>
+        <p><strong>Fuga en Materiales:</strong> $ <span id="resMaterial"></span></p>
+        <p><strong>Mano de Obra Perdida:</strong> $ <span id="resManoObra"></span> (Basado en 3 hrs por pieza)</p>
+        <p><strong>Lucro Cesante (Cabina Ocupada):</strong> $ <span id="resLucro"></span></p>
+        <hr>
+        <p class="alerta-roja">FUGA DE CAPITAL TOTAL: $ <span id="resFugaTotal"></span></p>
+        <p style="font-size: 16px;"><em>Para recuperar este dinero perdido, tu equipo tendrá que trabajar GRATIS pintando <strong id="piezasGratis" style="color:red; font-size: 20px;"></strong> piezas nuevas.</em></p>
+        
+        <a href="#" id="btnWhatsApp" class="btn-whatsapp" target="_blank">
+            🚨 Hablar con el Auditor (WhatsApp)
+        </a>
+    </div>
+</div>
+
+<script>
+    function calcularFuga() {
+        let vpp = parseFloat(document.getElementById('vpp').value) || 0;
+        let reprocesos = parseFloat(document.getElementById('reprocesos').value) || 0;
+        let costoMaterial = parseFloat(document.getElementById('costoMaterial').value) || 0;
+        let horaHombre = parseFloat(document.getElementById('horaHombre').value) || 0;
+
+        let perdidaMateriales = reprocesos * costoMaterial;
+        let perdidaManoObra = reprocesos * 3 * horaHombre; 
+        let lucroCesante = reprocesos * vpp; 
+        
+        let fugaTotal = perdidaMateriales + perdidaManoObra + lucroCesante;
+        let piezasATrabajarGratis = Math.ceil(fugaTotal / (vpp || 1)); 
+
+        document.getElementById('resMaterial').innerText = perdidaMateriales.toLocaleString('es-CO');
+        document.getElementById('resManoObra').innerText = perdidaManoObra.toLocaleString('es-CO');
+        document.getElementById('resLucro').innerText = lucroCesante.toLocaleString('es-CO');
+        document.getElementById('resFugaTotal').innerText = fugaTotal.toLocaleString('es-CO');
+        document.getElementById('piezasGratis').innerText = piezasATrabajarGratis;
+
+        // --- MAGIA DE WHATSAPP ---
+        // CAMBIA EL 573000000000 POR TU NÚMERO REAL
+        let numeroWhatsApp = "573227151050"; 
+        
+        let mensajeFormateado = "Hola Jhon Edward, acabo de usar tu Audit-Check y mi fuga mensual calculada es de $" + fugaTotal.toLocaleString('es-CO') + " COP. Necesito ayuda para frenar este desangre en mi taller.";
+        let urlWhatsApp = "https://wa.me/" + numeroWhatsApp + "?text=" + encodeURIComponent(mensajeFormateado);
+        
+        document.getElementById('btnWhatsApp').href = urlWhatsApp;
+
+        document.getElementById('cajaResultado').style.display = 'block';
+    }
+</script>
+
+</body>
+</html>
