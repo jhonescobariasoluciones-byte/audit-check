@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            /* Paleta de Colores Corporativos Premium B2B */
             --bg-body: #f0f2f5;          
             --bg-card: #ffffff;          
             --primary-navy: #1a2a40;     
@@ -143,47 +142,67 @@
             margin-bottom: 20px;
         }
 
-        .resultado p {
-            margin: 12px 0;
+        /* CORRECCIÓN: Aislamos el flexbox solo para esta sección */
+        .detalle-resultados p {
+            margin: 14px 0;
             font-size: 16px;
             color: var(--text-main);
             display: flex;
             justify-content: space-between;
             align-items: center;
+            border-bottom: 1px dashed #d1d8dd; /* Línea punteada elegante */
+            padding-bottom: 8px;
         }
 
-        .resultado strong {
+        .detalle-resultados p:last-child {
+            border-bottom: none;
+        }
+
+        .detalle-resultados strong {
             color: var(--primary-navy);
             font-weight: 700;
         }
 
+        /* CORRECCIÓN: Caja de Fuga Total Centrada */
         .fuga-total-box {
             margin-top: 25px;
             background-color: rgba(217, 56, 30, 0.08); 
-            padding: 20px;
+            padding: 25px 20px;
             border-radius: 10px;
             border: 2px solid rgba(217, 56, 30, 0.15);
-            text-align: center;
+            text-align: center; /* Obligamos a centrar todo el contenido */
+        }
+
+        .titulo-fuga {
+            color: var(--primary-navy); 
+            font-weight: 800;
+            margin-bottom: 10px;
+            font-size: 14px;
+            letter-spacing: 0.5px;
         }
 
         .alerta-roja { 
-            font-size: 24px; 
-            font-weight: 800; 
+            font-size: 32px; /* Más grande e impactante */
+            font-weight: 900; 
             color: var(--primary-red); 
-            margin: 0;
+            margin: 10px 0;
             letter-spacing: -1px;
+            display: block; /* Evita que se comporte como flex */
         }
 
         .gratis-msg {
-            font-size: 18px;
+            font-size: 17px;
             color: var(--text-main);
             margin-top: 15px;
+            line-height: 1.5;
+            display: block; /* Evita el flexbox heredado */
         }
 
         .piezas-gratis-num {
             color: var(--primary-red);
-            font-size: 28px;
+            font-size: 24px;
             font-weight: 900;
+            margin: 0 4px;
         }
 
         .btn-whatsapp { 
@@ -210,7 +229,7 @@
             box-shadow: 0px 6px 20px rgba(46, 204, 113, 0.3);
         }
 
-        /* Nota del Auditor Estilizada y Corregida */
+        /* CORRECCIÓN: Nota del Auditor limpia */
         .nota-auditor { 
             font-size: 14px; 
             color: var(--text-secondary); 
@@ -227,7 +246,7 @@
             align-items: center;
             gap: 8px;
             color: var(--primary-navy);
-            margin-bottom: 10px; 
+            margin-bottom: 12px; 
             font-size: 15px;
         }
 
@@ -241,6 +260,7 @@
         .nota-auditor p {
              margin: 0; 
              text-align: justify;
+             display: block; /* Forzamos a que baje a la siguiente línea */
         }
 
     </style>
@@ -288,14 +308,16 @@
     <div class="resultado" id="cajaResultado">
         <h3>🚨 RESULTADOS DEL DIAGNÓSTICO:</h3>
         
-        <p><span>Fuga Directa en Materiales:</span> <strong>$ <span id="resMaterial"></span></strong></p>
-        <p><span>Costo en Mano de Obra Perdida:</span> <strong>$ <span id="resManoObra"></span> (Basado en 3 hrs/reproceso)</strong></p>
-        <p><span>Lucro Cesante (Cabina Inmóvil):</span> <strong>$ <span id="resLucro"></span></strong></p>
+        <div class="detalle-resultados">
+            <p><span>Fuga Directa en Materiales:</span> <strong>$ <span id="resMaterial"></span></strong></p>
+            <p><span>Costo Mano de Obra Perdida:</span> <strong>$ <span id="resManoObra"></span> <span style="font-size:12px; font-weight:normal; color:#7f8c8d;">(3 hrs/reproceso)</span></strong></p>
+            <p><span>Lucro Cesante (Cabina Inmóvil):</span> <strong>$ <span id="resLucro"></span></strong></p>
+        </div>
         
         <div class="fuga-total-box">
-            <p style="justify-content: center; color: var(--primary-navy); font-weight: 700;">FUGA OPERATIVA DE CAPITAL:</p>
-            <p class="alerta-roja">$ <span id="resFugaTotal"></span> COP</p>
-            <p class="gratis-msg">Su equipo deberá trabajar <strong class="piezas-gratis-num" id="piezasGratis"></strong> piezas nuevas GRATIS este mes para recuperar este dinero.</p>
+            <div class="titulo-fuga">FUGA OPERATIVA DE CAPITAL:</div>
+            <strong class="alerta-roja">$ <span id="resFugaTotal"></span> COP</strong>
+            <span class="gratis-msg">Su equipo deberá trabajar <strong class="piezas-gratis-num" id="piezasGratis"></strong> piezas nuevas GRATIS este mes para recuperar este dinero.</span>
         </div>
         
         <a href="#" id="btnWhatsApp" class="btn-whatsapp" target="_blank">
@@ -332,7 +354,6 @@
         document.getElementById('resFugaTotal').innerText = formatoCOP.format(fugaTotal);
         document.getElementById('piezasGratis').innerText = piezasATrabajarGratis;
 
-        // TU NÚMERO ACTUALIZADO (Con indicativo 57)
         let numeroWhatsApp = "573227151050"; 
         
         let mensajeFormateado = "Hola Jhon Edward, acabo de usar tu 'Audit-Check Escobar' y mi fuga mensual calculada es de $" + formatoCOP.format(fugaTotal) + " COP. Necesito ayuda para frenar este desangre en mi taller de colisión.";
