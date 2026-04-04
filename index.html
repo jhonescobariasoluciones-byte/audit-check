@@ -17,6 +17,7 @@
         .alerta-roja { font-size: 18px; font-weight: bold; color: #c0392b; }
         .btn-whatsapp { display: block; text-align: center; background-color: #25D366; color: white; padding: 15px; margin-top: 20px; text-decoration: none; border-radius: 5px; font-weight: bold; font-size: 16px; transition: 0.3s; }
         .btn-whatsapp:hover { background-color: #1ebe5d; }
+        .nota-auditor { font-size: 13px; color: #7f8c8d; font-style: italic; margin-top: 25px; text-align: justify; border-top: 1px solid #eee; padding-top: 15px; }
     </style>
 </head>
 <body>
@@ -51,6 +52,10 @@
         <a href="#" id="btnWhatsApp" class="btn-whatsapp" target="_blank">
             🚨 Hablar con el Auditor (WhatsApp)
         </a>
+
+        <p class="nota-auditor">
+            <strong>Nota del Auditor:</strong> Este cálculo es una proyección matemática conservadora basada en costos operativos directos. No incluye variables críticas como el consumo energético (gas/electricidad), el desgaste administrativo, ni el impacto en la satisfacción del cliente final. El costo real de la ineficiencia en su taller es, con seguridad, superior al reflejado en este escaneo inicial.
+        </p>
     </div>
 </div>
 
@@ -74,12 +79,8 @@
         document.getElementById('resFugaTotal').innerText = fugaTotal.toLocaleString('es-CO');
         document.getElementById('piezasGratis').innerText = piezasATrabajarGratis;
 
-        // --- MAGIA DE WHATSAPP ---
         // CAMBIA EL 573000000000 POR TU NÚMERO REAL
         let numeroWhatsApp = "573227151050"; 
-        <p style="font-size: 13px; color: #7f8c8d; font-style: italic; margin-top: 25px; text-align: justify; border-top: 1px solid #eee; padding-top: 15px;">
-    <strong>Nota del Auditor:</strong> Este cálculo es una proyección matemática conservadora basada en costos operativos directos. No incluye variables críticas como el consumo energético (gas/electricidad), el desgaste administrativo, ni el impacto en la satisfacción del cliente final. El costo real de la ineficiencia en su taller es, con seguridad, superior al reflejado en este escaneo inicial.
-</p>
         
         let mensajeFormateado = "Hola Jhon Edward, acabo de usar tu Audit-Check y mi fuga mensual calculada es de $" + fugaTotal.toLocaleString('es-CO') + " COP. Necesito ayuda para frenar este desangre en mi taller.";
         let urlWhatsApp = "https://wa.me/" + numeroWhatsApp + "?text=" + encodeURIComponent(mensajeFormateado);
