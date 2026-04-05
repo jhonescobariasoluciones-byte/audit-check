@@ -82,7 +82,7 @@
             font-size: 18px;
         }
 
-        input { 
+        input, select { 
             width: 100%; 
             padding: 12px 15px 12px 45px; 
             border: 2px solid var(--border-color); 
@@ -91,9 +91,13 @@
             font-size: 16px; 
             color: var(--text-main);
             transition: 0.3s;
+            background-color: white;
+            font-family: inherit;
         }
 
-        input:focus {
+        select { cursor: pointer; }
+
+        input:focus, select:focus {
             border-color: var(--primary-red);
             outline: none;
             box-shadow: 0 0 10px rgba(217, 56, 30, 0.1);
@@ -142,7 +146,6 @@
             margin-bottom: 20px;
         }
 
-        /* CORRECCIÓN: Aislamos el flexbox solo para esta sección */
         .detalle-resultados p {
             margin: 14px 0;
             font-size: 16px;
@@ -150,7 +153,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px dashed #d1d8dd; /* Línea punteada elegante */
+            border-bottom: 1px dashed #d1d8dd; 
             padding-bottom: 8px;
         }
 
@@ -163,14 +166,13 @@
             font-weight: 700;
         }
 
-        /* CORRECCIÓN: Caja de Fuga Total Centrada */
         .fuga-total-box {
             margin-top: 25px;
             background-color: rgba(217, 56, 30, 0.08); 
             padding: 25px 20px;
             border-radius: 10px;
             border: 2px solid rgba(217, 56, 30, 0.15);
-            text-align: center; /* Obligamos a centrar todo el contenido */
+            text-align: center; 
         }
 
         .titulo-fuga {
@@ -182,12 +184,12 @@
         }
 
         .alerta-roja { 
-            font-size: 32px; /* Más grande e impactante */
+            font-size: 32px; 
             font-weight: 900; 
             color: var(--primary-red); 
             margin: 10px 0;
             letter-spacing: -1px;
-            display: block; /* Evita que se comporte como flex */
+            display: block; 
         }
 
         .gratis-msg {
@@ -195,7 +197,7 @@
             color: var(--text-main);
             margin-top: 15px;
             line-height: 1.5;
-            display: block; /* Evita el flexbox heredado */
+            display: block; 
         }
 
         .piezas-gratis-num {
@@ -229,7 +231,6 @@
             box-shadow: 0px 6px 20px rgba(46, 204, 113, 0.3);
         }
 
-        /* CORRECCIÓN: Nota del Auditor limpia */
         .nota-auditor { 
             font-size: 14px; 
             color: var(--text-secondary); 
@@ -260,7 +261,7 @@
         .nota-auditor p {
              margin: 0; 
              text-align: justify;
-             display: block; /* Forzamos a que baje a la siguiente línea */
+             display: block; 
         }
 
     </style>
@@ -272,7 +273,18 @@
     <p class="subtitle">Solo 4 datos clave para diagnosticar la salud operativa de su patio.</p>
 
     <div class="input-group">
-        <label>1. Valor Facturado por Pieza (COP):</label>
+        <label>Moneda de cálculo:</label>
+        <div class="input-with-icon">
+            <i class="fas fa-globe"></i>
+            <select id="moneda">
+                <option value="COP">Pesos Colombianos (COP)</option>
+                <option value="USD">Dólares Estadounidenses (USD)</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="input-group">
+        <label>1. Valor Facturado por Pieza:</label>
         <div class="input-with-icon">
             <i class="fas fa-money-bill-wave"></i>
             <input type="number" id="vpp" placeholder="Ej: 400000">
@@ -288,7 +300,7 @@
     </div>
 
     <div class="input-group">
-        <label>3. Costo del Kit de Material por Pieza (COP):</label>
+        <label>3. Costo del Kit de Material por Pieza:</label>
         <div class="input-with-icon">
             <i class="fas fa-paint-brush"></i>
             <input type="number" id="costoMaterial" placeholder="Ej: 120000">
@@ -296,7 +308,7 @@
     </div>
 
     <div class="input-group">
-        <label>4. Valor promedio de la Hora/Hombre (COP):</label>
+        <label>4. Valor promedio de la Hora/Hombre:</label>
         <div class="input-with-icon">
             <i class="fas fa-stopwatch"></i>
             <input type="number" id="horaHombre" placeholder="Ej: 20000">
@@ -309,14 +321,14 @@
         <h3>🚨 RESULTADOS DEL DIAGNÓSTICO:</h3>
         
         <div class="detalle-resultados">
-            <p><span>Fuga Directa en Materiales:</span> <strong>$ <span id="resMaterial"></span></strong></p>
-            <p><span>Costo Mano de Obra Perdida:</span> <strong>$ <span id="resManoObra"></span> <span style="font-size:12px; font-weight:normal; color:#7f8c8d;">(3 hrs/reproceso)</span></strong></p>
-            <p><span>Lucro Cesante (Cabina Inmóvil):</span> <strong>$ <span id="resLucro"></span></strong></p>
+            <p><span>Fuga Directa en Materiales:</span> <strong>$ <span id="resMaterial"></span> <span class="moneda-text"></span></strong></p>
+            <p><span>Costo Mano de Obra Perdida:</span> <strong>$ <span id="resManoObra"></span> <span class="moneda-text"></span> <span style="font-size:12px; font-weight:normal; color:#7f8c8d; display:block; text-align:right;">(3 hrs/reproceso)</span></strong></p>
+            <p><span>Lucro Cesante (Cabina Inmóvil):</span> <strong>$ <span id="resLucro"></span> <span class="moneda-text"></span></strong></p>
         </div>
         
         <div class="fuga-total-box">
             <div class="titulo-fuga">FUGA OPERATIVA DE CAPITAL:</div>
-            <strong class="alerta-roja">$ <span id="resFugaTotal"></span> COP</strong>
+            <strong class="alerta-roja">$ <span id="resFugaTotal"></span> <span class="moneda-text"></span></strong>
             <span class="gratis-msg">Su equipo deberá trabajar <strong class="piezas-gratis-num" id="piezasGratis"></strong> piezas nuevas GRATIS este mes para recuperar este dinero.</span>
         </div>
         
@@ -334,6 +346,9 @@
 
 <script>
     function calcularFuga() {
+        // Capturar moneda seleccionada
+        let monedaSeleccionada = document.getElementById('moneda').value;
+
         let vpp = parseFloat(document.getElementById('vpp').value) || 0;
         let reprocesos = parseFloat(document.getElementById('reprocesos').value) || 0;
         let costoMaterial = parseFloat(document.getElementById('costoMaterial').value) || 0;
@@ -346,17 +361,24 @@
         let fugaTotal = perdidaMateriales + perdidaManoObra + lucroCesante;
         let piezasATrabajarGratis = Math.ceil(fugaTotal / (vpp || 1)); 
 
-        const formatoCOP = new Intl.NumberFormat('es-CO');
+        const formatoNumerico = new Intl.NumberFormat('es-CO');
 
-        document.getElementById('resMaterial').innerText = formatoCOP.format(perdidaMateriales);
-        document.getElementById('resManoObra').innerText = formatoCOP.format(perdidaManoObra);
-        document.getElementById('resLucro').innerText = formatoCOP.format(lucroCesante);
-        document.getElementById('resFugaTotal').innerText = formatoCOP.format(fugaTotal);
+        document.getElementById('resMaterial').innerText = formatoNumerico.format(perdidaMateriales);
+        document.getElementById('resManoObra').innerText = formatoNumerico.format(perdidaManoObra);
+        document.getElementById('resLucro').innerText = formatoNumerico.format(lucroCesante);
+        document.getElementById('resFugaTotal').innerText = formatoNumerico.format(fugaTotal);
         document.getElementById('piezasGratis').innerText = piezasATrabajarGratis;
+
+        // Actualizar los textos de la moneda en el HTML
+        let elementosMoneda = document.querySelectorAll('.moneda-text');
+        elementosMoneda.forEach(function(elemento) {
+            elemento.innerText = monedaSeleccionada;
+        });
 
         let numeroWhatsApp = "573227151050"; 
         
-        let mensajeFormateado = "Hola Jhon Edward, acabo de usar tu 'Audit-Check Escobar' y mi fuga mensual calculada es de $" + formatoCOP.format(fugaTotal) + " COP. Necesito ayuda para frenar este desangre en mi taller de colisión.";
+        // Mensaje dinámico que incluye la moneda elegida
+        let mensajeFormateado = "Hola Jhon Edward, acabo de usar tu 'Audit-Check Escobar' y mi fuga mensual calculada es de $" + formatoNumerico.format(fugaTotal) + " " + monedaSeleccionada + ". Necesito ayuda para frenar este desangre en mi taller de colisión.";
         let urlWhatsApp = "https://wa.me/" + numeroWhatsApp + "?text=" + encodeURIComponent(mensajeFormateado);
         
         document.getElementById('btnWhatsApp').href = urlWhatsApp;
