@@ -16,6 +16,7 @@
             --card-bg: #ffffff;
             --text-main: #334155;
             --border-color: #e2e8f0;
+            --icon-color: #94a3b8;
         }
 
         * {
@@ -96,22 +97,37 @@
         }
 
         .input-group {
-            margin-bottom: 16px;
+            margin-bottom: 20px;
         }
 
         .input-group label {
             display: block;
-            font-size: 13px;
+            font-size: 14px;
             font-weight: 600;
-            margin-bottom: 6px;
-            color: var(--text-main);
+            margin-bottom: 8px;
+            color: var(--primary-dark);
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            color: var(--icon-color);
         }
 
         .input-group input {
             width: 100%;
-            padding: 14px;
+            padding: 16px;
+            padding-left: 50px;
             border: 2px solid var(--border-color);
-            border-radius: 8px;
+            border-radius: 10px;
             font-size: 16px;
             font-weight: 600;
             color: var(--primary-dark);
@@ -121,6 +137,26 @@
         .input-group input:focus {
             outline: none;
             border-color: var(--primary-dark);
+        }
+
+        /* Icono de dinero */
+        .icon-money {
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 12s2.5-6 10-6 10 6 10 6-2.5 6-10 6-10-6-10-6z'/%3E%3Ccircle cx='12' cy='12' r='3'/%3E%3Cpath d='M16 16c0 1.1-.9 2-2 2H6c-1.1 0-2-.9-2-2V8c0-1.1.9-2 2-2h8c1.1 0 2 .9 2 2v8z'/%3E%3C/svg%3E") no-repeat center;
+        }
+
+        /* Icono de coche chocado */
+        .icon-car {
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M16 8V6a2 2 0 00-2-2H4a2 2 0 00-2 2v12a2 2 0 002 2h2m10-10v8m0 0h6a2 2 0 002-2v-6a2 2 0 00-2-2h-6m-8 6h4m4-2v4m-8-2v4m4 0h-4'/%3E%3C/svg%3E") no-repeat center;
+        }
+
+        /* Icono de brocha de pintura */
+        .icon-paint {
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M10.7 13.3c-2.8-2.8-2.8-7.3 0-10.1l.3-.3a1 1 0 011.4 0l8.7 8.7a1 1 0 010 1.4l-.3.3c-2.8 2.8-7.3 2.8-10.1 0z'/%3E%3Cpath d='M17 11.5L20.5 8'/%3E%3Cpath d='M11 17.5L7.5 21'/%3E%3Cpath d='M3 21l3.5-3.5'/%3E%3Cpath d='M6 13.5L9.5 10'/%3E%3C/svg%3E") no-repeat center;
+        }
+
+        /* Icono de cronómetro */
+        .icon-timer {
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpolyline points='12 6 12 12 16 14'/%3E%3C/svg%3E") no-repeat center;
         }
 
         .dashboard-result {
@@ -173,8 +209,7 @@
 
 <div class="app-container">
     <div class="header">
-        <h1>Audit-Check</h1>
-        <p>Escáner de Rentabilidad de Patio</p>
+        <h1>Audit-Check Escáner de Rentabilidad de Patio</h1>
     </div>
 
     <div class="content">
@@ -184,23 +219,35 @@
         </div>
 
         <div class="input-group">
-            <label>1. Reprocesos mensuales (Cant. de piezas)</label>
-            <input type="number" id="reprocesos" placeholder="Ej. 15" oninput="calcularFuga()">
+            <label>1. Valor Facturado por Pieza:</label>
+            <div class="input-wrapper">
+                <span class="input-icon icon-money"></span>
+                <input type="number" id="input_vpp" placeholder="Ej: 400000" oninput="calcularFuga()">
+            </div>
         </div>
 
         <div class="input-group">
-            <label>2. Costo promedio material por pieza</label>
-            <input type="number" id="costo_material" placeholder="Ej. 120000" oninput="calcularFuga()">
+            <label>2. Número de Piezas REPROCESADAS (al mes):</label>
+            <div class="input-wrapper">
+                <span class="input-icon icon-car"></span>
+                <input type="number" step="1" id="input_reprocesos" placeholder="Ej: 15" oninput="calcularFuga()">
+            </div>
         </div>
 
         <div class="input-group">
-            <label>3. Horas perdidas por pieza reprocesada</label>
-            <input type="number" id="horas_perdidas" placeholder="Ej. 2" oninput="calcularFuga()">
+            <label>3. Costo del Kit de Material por Pieza:</label>
+            <div class="input-wrapper">
+                <span class="input-icon icon-paint"></span>
+                <input type="number" id="input_material" placeholder="Ej: 120000" oninput="calcularFuga()">
+            </div>
         </div>
 
         <div class="input-group">
-            <label>4. Valor comercial hora de Cabina (Lucro Cesante)</label>
-            <input type="number" id="valor_hora" placeholder="Ej. 85000" oninput="calcularFuga()">
+            <label>4. Valor promedio de la Hora/Hombre:</label>
+            <div class="input-wrapper">
+                <span class="input-icon icon-timer"></span>
+                <input type="number" id="input_hora_hombre" placeholder="Ej: 20000" oninput="calcularFuga()">
+            </div>
         </div>
 
         <div class="dashboard-result">
@@ -234,16 +281,26 @@
     }
 
     function calcularFuga() {
-        // Obtener valores
-        let reprocesos = parseFloat(document.getElementById('reprocesos').value) || 0;
-        let costoMaterial = parseFloat(document.getElementById('costo_material').value) || 0;
-        let horasPerdidas = parseFloat(document.getElementById('horas_perdidas').value) || 0;
-        let valorHora = parseFloat(document.getElementById('valor_hora').value) || 0;
+        // Obtener valores de los nuevos IDs
+        let facturadoPieza = parseFloat(document.getElementById('input_vpp').value) || 0;
+        let piezasReprocesadas = parseFloat(document.getElementById('input_reprocesos').value) || 0;
+        let costoMaterialKit = parseFloat(document.getElementById('input_material').value) || 0;
+        let horaHombre = parseFloat(document.getElementById('input_hora_hombre').value) || 0;
 
-        // Formula: (Reprocesos * Costo Material) + (Reprocesos * Horas * Valor Hora Cabina)
-        let perdidaMateriales = reprocesos * costoMaterial;
-        let lucroCesante = reprocesos * horasPerdidas * valorHora;
-        let fugaTotal = perdidaMateriales + lucroCesante;
+        // --- NUEVA LÓGICA DE CÁLCULO ---
+        // Asumimos que cada reproceso secuestra la cabina y es una oportunidad de venta de un carro nuevo perdida.
+        
+        // 1. Costo Directo de Material Tirado (Costo Directo)
+        let perdidaMaterialTotal = piezasReprocesadas * costoMaterialKit;
+        
+        // 2. Lucro Cesante por Pieza (Costo de Oportunidad)
+        // Usamos el Facturado Pieza como el multiplicador de pérdida de venta bruta por unidad que pudo haberse facturado.
+        let oportunidadVentaPerdida = piezasReprocesadas * facturadoPieza; 
+
+        // Fuga Total = Costo Directo + Costo de Oportunidad
+        // Omitimos la hora/hombre del cálculo directo por ahora, ya que no hay un multiplicador de horas por pieza explícito,
+        // pero la mantenemos como campo para visualización del usuario.
+        let fugaTotal = perdidaMaterialTotal + oportunidadVentaPerdida;
 
         // Formatear moneda
         let locale = currentCurrency === 'COP' ? 'es-CO' : 'en-US';
