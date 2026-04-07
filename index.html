@@ -2,388 +2,259 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Audit-Check Escobar: Fuga Operativa</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Audit-Check Premium | Jhon Escobar</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-body: #f0f2f5;          
-            --bg-card: #ffffff;          
-            --primary-navy: #1a2a40;     
-            --primary-red: #d9381e;      
-            --text-main: #2c3e50;         
-            --text-secondary: #7f8c8d;   
-            --accent-green: #2ecc71;     
-            --border-color: #e1e8ed;     
+            --primary-dark: #1e293b;
+            --danger-red: #dc2626;
+            --danger-bg: #fef2f2;
+            --success-green: #16a34a;
+            --success-bg: #f0fdf4;
+            --bg-color: #f1f5f9;
+            --card-bg: #ffffff;
+            --text-main: #334155;
+            --border-color: #e2e8f0;
         }
 
-        body { 
-            font-family: 'Inter', 'Segoe UI', Arial, sans-serif; 
-            background-color: var(--bg-body); 
-            color: var(--text-main);
+        * {
+            box-sizing: border-box;
             margin: 0;
-            padding: 20px;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
             display: flex;
             justify-content: center;
-            align-items: center;
+            padding: 20px;
             min-height: 100vh;
         }
 
-        .calculadora-container { 
-            background: var(--bg-card); 
-            padding: 40px; 
-            border-radius: 16px; 
-            max-width: 550px; 
+        .app-container {
+            background-color: var(--card-bg);
             width: 100%;
-            box-shadow: 0px 8px 30px rgba(0,0,0,0.06); 
-            border-top: 6px solid var(--primary-navy); 
-            transition: 0.3s;
+            max-width: 600px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
         }
 
-        h2 { 
-            color: var(--primary-navy); 
-            text-align: center; 
-            margin-top: 0;
-            font-size: 28px;
-            letter-spacing: -0.5px;
+        .header {
+            background-color: var(--primary-dark);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 24px;
             font-weight: 800;
+            letter-spacing: -0.5px;
         }
 
-        .subtitle { 
-            text-align: center; 
-            color: var(--text-secondary); 
-            font-size: 16px;
-            margin-bottom: 30px;
+        .header p {
+            font-size: 13px;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+
+        .content {
+            padding: 24px;
+        }
+
+        .currency-toggle {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 24px;
+            background: var(--bg-color);
+            border-radius: 8px;
+            padding: 4px;
+        }
+
+        .currency-btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            background: transparent;
+            color: var(--text-main);
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .currency-btn.active {
+            background: var(--card-bg);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            color: var(--primary-dark);
         }
 
         .input-group {
-            margin-bottom: 20px;
-            position: relative;
+            margin-bottom: 16px;
         }
 
-        label { 
-            font-weight: 600; 
-            color: var(--primary-navy); 
-            display: block; 
-            margin-bottom: 8px;
-            font-size: 14px;
-        }
-
-        .input-with-icon {
-            position: relative;
-        }
-
-        .input-with-icon i {
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-secondary);
-            font-size: 18px;
-        }
-
-        input, select { 
-            width: 100%; 
-            padding: 12px 15px 12px 45px; 
-            border: 2px solid var(--border-color); 
-            border-radius: 8px; 
-            box-sizing: border-box; 
-            font-size: 16px; 
+        .input-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 6px;
             color: var(--text-main);
-            transition: 0.3s;
-            background-color: white;
-            font-family: inherit;
         }
 
-        select { cursor: pointer; }
-
-        input:focus, select:focus {
-            border-color: var(--primary-red);
-            outline: none;
-            box-shadow: 0 0 10px rgba(217, 56, 30, 0.1);
-        }
-
-        .btn-audit { 
-            width: 100%; 
-            padding: 18px; 
-            margin-top: 25px; 
-            background-color: var(--primary-red); 
-            color: white; 
-            border: none; 
-            border-radius: 8px; 
-            font-size: 18px; 
-            font-weight: 700; 
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            cursor: pointer; 
-            transition: 0.3s; 
-            box-shadow: 0px 4px 15px rgba(217, 56, 30, 0.2);
-        }
-
-        .btn-audit:hover { 
-            background-color: #b02a16; 
-            transform: translateY(-2px);
-            box-shadow: 0px 6px 20px rgba(217, 56, 30, 0.3);
-        }
-
-        .resultado { 
-            margin-top: 35px; 
-            padding: 25px; 
-            background-color: var(--bg-body); 
-            border-radius: 12px;
-            border: 1px solid var(--border-color);
-            display: none; 
-        }
-
-        .resultado h3 { 
-            margin-top: 0; 
-            color: var(--primary-red); 
-            font-size: 22px;
-            font-weight: 800;
-            text-align: center;
-            border-bottom: 2px solid rgba(217, 56, 30, 0.1);
-            padding-bottom: 15px;
-            margin-bottom: 20px;
-        }
-
-        .detalle-resultados p {
-            margin: 14px 0;
-            font-size: 16px;
-            color: var(--text-main);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px dashed #d1d8dd; 
-            padding-bottom: 8px;
-        }
-
-        .detalle-resultados p:last-child {
-            border-bottom: none;
-        }
-
-        .detalle-resultados strong {
-            color: var(--primary-navy);
-            font-weight: 700;
-        }
-
-        .fuga-total-box {
-            margin-top: 25px;
-            background-color: rgba(217, 56, 30, 0.08); 
-            padding: 25px 20px;
-            border-radius: 10px;
-            border: 2px solid rgba(217, 56, 30, 0.15);
-            text-align: center; 
-        }
-
-        .titulo-fuga {
-            color: var(--primary-navy); 
-            font-weight: 800;
-            margin-bottom: 10px;
-            font-size: 14px;
-            letter-spacing: 0.5px;
-        }
-
-        .alerta-roja { 
-            font-size: 32px; 
-            font-weight: 900; 
-            color: var(--primary-red); 
-            margin: 10px 0;
-            letter-spacing: -1px;
-            display: block; 
-        }
-
-        .gratis-msg {
-            font-size: 17px;
-            color: var(--text-main);
-            margin-top: 15px;
-            line-height: 1.5;
-            display: block; 
-        }
-
-        .piezas-gratis-num {
-            color: var(--primary-red);
-            font-size: 24px;
-            font-weight: 900;
-            margin: 0 4px;
-        }
-
-        .btn-whatsapp { 
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-            text-align: center; 
-            background-color: var(--accent-green); 
-            color: white; 
-            padding: 18px; 
-            margin-top: 30px; 
-            text-decoration: none; 
-            border-radius: 8px; 
-            font-size: 17px; 
-            font-weight: 700; 
-            transition: 0.3s; 
-            box-shadow: 0px 4px 15px rgba(46, 204, 113, 0.2);
-        }
-
-        .btn-whatsapp:hover { 
-            background-color: #1ebe5d; 
-            transform: translateY(-2px);
-            box-shadow: 0px 6px 20px rgba(46, 204, 113, 0.3);
-        }
-
-        .nota-auditor { 
-            font-size: 14px; 
-            color: var(--text-secondary); 
-            margin-top: 35px; 
-            background-color: rgba(26, 42, 64, 0.05); 
-            padding: 20px; 
+        .input-group input {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid var(--border-color);
             border-radius: 8px;
-            border-left: 4px solid var(--primary-navy); 
-            line-height: 1.6; 
-        }
-        
-        .nota-auditor strong {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: var(--primary-navy);
-            margin-bottom: 12px; 
-            font-size: 15px;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--primary-dark);
+            transition: border-color 0.3s ease;
         }
 
-        .nota-auditor strong::before {
-            content: "\f0a9"; 
-            font-family: 'Font Awesome 6 Free';
-            font-weight: 900;
-            color: var(--primary-red);
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--primary-dark);
         }
 
-        .nota-auditor p {
-             margin: 0; 
-             text-align: justify;
-             display: block; 
+        .dashboard-result {
+            background-color: var(--danger-bg);
+            border: 2px solid #fca5a5;
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+            margin-top: 24px;
         }
 
+        .dashboard-result h2 {
+            font-size: 14px;
+            text-transform: uppercase;
+            color: var(--danger-red);
+            font-weight: 800;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .fuga-total {
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--danger-red);
+            line-height: 1.2;
+            margin-bottom: 10px;
+        }
+
+        .action-banner {
+            background-color: var(--success-bg);
+            color: var(--success-green);
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 800;
+            font-size: 14px;
+            margin-top: 16px;
+            border: 1px solid #86efac;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 16px;
+            font-size: 12px;
+            color: #94a3b8;
+            border-top: 1px solid var(--border-color);
+        }
     </style>
 </head>
 <body>
 
-<div class="calculadora-container">
-    <h2>📊 Audit-Check Escobar</h2>
-    <p class="subtitle">Solo 4 datos clave para diagnosticar la salud operativa de su patio.</p>
+<div class="app-container">
+    <div class="header">
+        <h1>Audit-Check</h1>
+        <p>Escáner de Rentabilidad de Patio</p>
+    </div>
 
-    <div class="input-group">
-        <label>Moneda de cálculo:</label>
-        <div class="input-with-icon">
-            <i class="fas fa-globe"></i>
-            <select id="moneda">
-                <option value="COP">Pesos Colombianos (COP)</option>
-                <option value="USD">Dólares Estadounidenses (USD)</option>
-            </select>
+    <div class="content">
+        <div class="currency-toggle">
+            <button class="currency-btn active" id="btn-cop" onclick="setCurrency('COP')">COP ($)</button>
+            <button class="currency-btn" id="btn-usd" onclick="setCurrency('USD')">USD ($)</button>
+        </div>
+
+        <div class="input-group">
+            <label>1. Reprocesos mensuales (Cant. de piezas)</label>
+            <input type="number" id="reprocesos" placeholder="Ej. 15" oninput="calcularFuga()">
+        </div>
+
+        <div class="input-group">
+            <label>2. Costo promedio material por pieza</label>
+            <input type="number" id="costo_material" placeholder="Ej. 120000" oninput="calcularFuga()">
+        </div>
+
+        <div class="input-group">
+            <label>3. Horas perdidas por pieza reprocesada</label>
+            <input type="number" id="horas_perdidas" placeholder="Ej. 2" oninput="calcularFuga()">
+        </div>
+
+        <div class="input-group">
+            <label>4. Valor comercial hora de Cabina (Lucro Cesante)</label>
+            <input type="number" id="valor_hora" placeholder="Ej. 85000" oninput="calcularFuga()">
+        </div>
+
+        <div class="dashboard-result">
+            <h2>Fuga Operativa Mensual</h2>
+            <div class="fuga-total" id="resultado_fuga">$0</div>
+            <div class="action-banner">
+                ATACAR: OPTIMIZACIÓN DE CABINA #1
+            </div>
         </div>
     </div>
 
-    <div class="input-group">
-        <label>1. Valor Facturado por Pieza:</label>
-        <div class="input-with-icon">
-            <i class="fas fa-money-bill-wave"></i>
-            <input type="number" id="vpp" placeholder="Ej: 400000">
-        </div>
-    </div>
-
-    <div class="input-group">
-        <label>2. Número de Piezas REPROCESADAS (al mes):</label>
-        <div class="input-with-icon">
-            <i class="fas fa-car-crash"></i>
-            <input type="number" id="reprocesos" placeholder="Ej: 15">
-        </div>
-    </div>
-
-    <div class="input-group">
-        <label>3. Costo del Kit de Material por Pieza:</label>
-        <div class="input-with-icon">
-            <i class="fas fa-paint-brush"></i>
-            <input type="number" id="costoMaterial" placeholder="Ej: 120000">
-        </div>
-    </div>
-
-    <div class="input-group">
-        <label>4. Valor promedio de la Hora/Hombre:</label>
-        <div class="input-with-icon">
-            <i class="fas fa-stopwatch"></i>
-            <input type="number" id="horaHombre" placeholder="Ej: 20000">
-        </div>
-    </div>
-
-    <button class="btn-audit" onclick="calcularFuga()">DIAGNOSTICAR RENTABILIDAD 🔎</button>
-
-    <div class="resultado" id="cajaResultado">
-        <h3>🚨 RESULTADOS DEL DIAGNÓSTICO:</h3>
-        
-        <div class="detalle-resultados">
-            <p><span>Fuga Directa en Materiales:</span> <strong>$ <span id="resMaterial"></span> <span class="moneda-text"></span></strong></p>
-            <p><span>Costo Mano de Obra Perdida:</span> <strong>$ <span id="resManoObra"></span> <span class="moneda-text"></span> <span style="font-size:12px; font-weight:normal; color:#7f8c8d; display:block; text-align:right;">(3 hrs/reproceso)</span></strong></p>
-            <p><span>Lucro Cesante (Cabina Inmóvil):</span> <strong>$ <span id="resLucro"></span> <span class="moneda-text"></span></strong></p>
-        </div>
-        
-        <div class="fuga-total-box">
-            <div class="titulo-fuga">FUGA OPERATIVA DE CAPITAL:</div>
-            <strong class="alerta-roja">$ <span id="resFugaTotal"></span> <span class="moneda-text"></span></strong>
-            <span class="gratis-msg">Su equipo deberá trabajar <strong class="piezas-gratis-num" id="piezasGratis"></strong> piezas nuevas GRATIS este mes para recuperar este dinero.</span>
-        </div>
-        
-        <a href="#" id="btnWhatsApp" class="btn-whatsapp" target="_blank">
-            <i class="fab fa-whatsapp"></i>
-            🚨 Detener Fuga Operativa con el Auditor
-        </a>
-
-        <div class="nota-auditor">
-            <strong>Nota del Auditor (Visión Global):</strong> 
-            <p>Este cálculo es una proyección matemática conservadora. No incluye variables críticas como el consumo energético (gas/electricidad) del quemador, el desgaste administrativo, ni el impacto en la satisfacción final del cliente. El costo real de la ineficiencia es, con seguridad, superior al reflejado aquí.</p>
-        </div>
+    <div class="footer">
+        Desarrollado por Jhon Edward Escobar | Consultoría B2B
     </div>
 </div>
 
 <script>
-    function calcularFuga() {
-        // Capturar moneda seleccionada
-        let monedaSeleccionada = document.getElementById('moneda').value;
+    let currentCurrency = 'COP';
 
-        let vpp = parseFloat(document.getElementById('vpp').value) || 0;
-        let reprocesos = parseFloat(document.getElementById('reprocesos').value) || 0;
-        let costoMaterial = parseFloat(document.getElementById('costoMaterial').value) || 0;
-        let horaHombre = parseFloat(document.getElementById('horaHombre').value) || 0;
-
-        let perdidaMateriales = reprocesos * costoMaterial;
-        let perdidaManoObra = reprocesos * 3 * horaHombre; 
-        let lucroCesante = reprocesos * vpp; 
+    function setCurrency(currency) {
+        currentCurrency = currency;
+        document.getElementById('btn-cop').classList.remove('active');
+        document.getElementById('btn-usd').classList.remove('active');
         
-        let fugaTotal = perdidaMateriales + perdidaManoObra + lucroCesante;
-        let piezasATrabajarGratis = Math.ceil(fugaTotal / (vpp || 1)); 
+        if(currency === 'COP') {
+            document.getElementById('btn-cop').classList.add('active');
+        } else {
+            document.getElementById('btn-usd').classList.add('active');
+        }
+        calcularFuga();
+    }
 
-        const formatoNumerico = new Intl.NumberFormat('es-CO');
+    function calcularFuga() {
+        // Obtener valores
+        let reprocesos = parseFloat(document.getElementById('reprocesos').value) || 0;
+        let costoMaterial = parseFloat(document.getElementById('costo_material').value) || 0;
+        let horasPerdidas = parseFloat(document.getElementById('horas_perdidas').value) || 0;
+        let valorHora = parseFloat(document.getElementById('valor_hora').value) || 0;
 
-        document.getElementById('resMaterial').innerText = formatoNumerico.format(perdidaMateriales);
-        document.getElementById('resManoObra').innerText = formatoNumerico.format(perdidaManoObra);
-        document.getElementById('resLucro').innerText = formatoNumerico.format(lucroCesante);
-        document.getElementById('resFugaTotal').innerText = formatoNumerico.format(fugaTotal);
-        document.getElementById('piezasGratis').innerText = piezasATrabajarGratis;
+        // Formula: (Reprocesos * Costo Material) + (Reprocesos * Horas * Valor Hora Cabina)
+        let perdidaMateriales = reprocesos * costoMaterial;
+        let lucroCesante = reprocesos * horasPerdidas * valorHora;
+        let fugaTotal = perdidaMateriales + lucroCesante;
 
-        // Actualizar los textos de la moneda en el HTML
-        let elementosMoneda = document.querySelectorAll('.moneda-text');
-        elementosMoneda.forEach(function(elemento) {
-            elemento.innerText = monedaSeleccionada;
+        // Formatear moneda
+        let locale = currentCurrency === 'COP' ? 'es-CO' : 'en-US';
+        let formatter = new Intl.NumberFormat(locale, {
+            style: 'currency',
+            currency: currentCurrency,
+            maximumFractionDigits: 0
         });
 
-        let numeroWhatsApp = "573227151050"; 
-        
-        // Mensaje dinámico que incluye la moneda elegida
-        let mensajeFormateado = "Hola Jhon Edward, acabo de usar tu 'Audit-Check Escobar' y mi fuga mensual calculada es de $" + formatoNumerico.format(fugaTotal) + " " + monedaSeleccionada + ". Necesito ayuda para frenar este desangre en mi taller de colisión.";
-        let urlWhatsApp = "https://wa.me/" + numeroWhatsApp + "?text=" + encodeURIComponent(mensajeFormateado);
-        
-        document.getElementById('btnWhatsApp').href = urlWhatsApp;
-
-        document.getElementById('cajaResultado').style.display = 'block';
+        // Actualizar UI
+        document.getElementById('resultado_fuga').innerText = formatter.format(fugaTotal);
     }
 </script>
 
