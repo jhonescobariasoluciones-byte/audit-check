@@ -41,7 +41,7 @@
             max-width: 600px;
             border-radius: 16px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            overflow: hidden;
+            /* Se eliminó overflow: hidden para que el tooltip pueda salir */
             display: flex;
             flex-direction: column;
         }
@@ -51,6 +51,7 @@
             color: white;
             padding: 20px;
             text-align: center;
+            border-radius: 16px 16px 0 0; /* Mantiene los bordes curvos arriba */
         }
 
         .header h1 {
@@ -91,7 +92,7 @@
         }
 
         .input-group {
-            margin-bottom: 20px;
+            margin-bottom: 24px;
         }
 
         /* Contenedor de la etiqueta y el botón de info */
@@ -99,6 +100,7 @@
             display: flex;
             align-items: center;
             margin-bottom: 8px;
+            position: relative; /* Clave para el tooltip */
         }
 
         .label-container label {
@@ -109,57 +111,58 @@
         }
 
         /* Estilo del botón Tooltip */
-        .tooltip {
-            position: relative;
+        .tooltip-btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 18px;
-            height: 18px;
+            width: 20px;
+            height: 20px;
             background-color: var(--border-color);
             color: var(--text-main);
             border-radius: 50%;
             font-size: 12px;
             font-weight: bold;
-            cursor: help;
+            cursor: pointer;
+            user-select: none;
         }
 
-        .tooltip .tooltip-text {
+        /* El cuadro de texto del tooltip */
+        .tooltip-text {
             visibility: hidden;
-            width: 240px;
+            width: 250px;
             background-color: var(--primary-dark);
             color: #fff;
             text-align: center;
-            border-radius: 6px;
-            padding: 10px;
+            border-radius: 8px;
+            padding: 12px;
             position: absolute;
-            z-index: 10;
-            bottom: 130%;
+            z-index: 999;
+            top: 130%; /* Ahora sale hacia abajo para no ser cortado */
             left: 50%;
             transform: translateX(-50%);
             opacity: 0;
-            transition: opacity 0.3s;
+            transition: opacity 0.2s;
             font-size: 12px;
             font-weight: 400;
             line-height: 1.4;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-            pointer-events: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
 
-        .tooltip .tooltip-text::after {
+        /* La flechita del tooltip */
+        .tooltip-text::after {
             content: "";
             position: absolute;
-            top: 100%;
+            bottom: 100%; /* Flecha arriba */
             left: 50%;
-            margin-left: -5px;
-            border-width: 5px;
+            margin-left: -6px;
+            border-width: 6px;
             border-style: solid;
-            border-color: var(--primary-dark) transparent transparent transparent;
+            border-color: transparent transparent var(--primary-dark) transparent;
         }
 
-        /* Mostrar el tooltip al pasar el mouse (PC) o tocar (Móvil) */
-        .tooltip:hover .tooltip-text,
-        .tooltip:active .tooltip-text {
+        /* Mostrar el tooltip con la clase 'show' o hover */
+        .tooltip-btn:hover + .tooltip-text,
+        .tooltip-text.show {
             visibility: visible;
             opacity: 1;
         }
@@ -244,6 +247,7 @@
             font-size: 12px;
             color: #94a3b8;
             border-top: 1px solid var(--border-color);
+            border-radius: 0 0 16px 16px;
         }
     </style>
 </head>
@@ -251,7 +255,7 @@
 
 <div class="app-container">
     <div class="header">
-        <h1>Audit-Check Escáner de Rentabilidad de Patio</h1>
+        <h1>Audit-Check Escáner de Rentabilidad</h1>
     </div>
 
     <div class="content">
@@ -263,9 +267,8 @@
         <div class="input-group">
             <div class="label-container">
                 <label>1. Valor Facturado por Pieza:</label>
-                <div class="tooltip">i
-                    <span class="tooltip-text">Aquí va el valor de la pieza según el costo de la compañía de seguros, particular o tarifario del taller.</span>
-                </div>
+                <div class="tooltip-btn" onclick="toggleTooltip(this)">i</div>
+                <div class="tooltip-text">Aquí va el valor de la pieza según el costo de la compañía de seguros, particular o tarifario del taller.</div>
             </div>
             <div class="input-wrapper">
                 <span class="input-icon icon-money"></span>
@@ -276,9 +279,8 @@
         <div class="input-group">
             <div class="label-container">
                 <label>2. Número de Piezas REPROCESADAS:</label>
-                <div class="tooltip">i
-                    <span class="tooltip-text">Cantidad total de piezas que tuvieron que volver a prepararse o pintarse en el mes por algún defecto.</span>
-                </div>
+                <div class="tooltip-btn" onclick="toggleTooltip(this)">i</div>
+                <div class="tooltip-text">Cantidad total de piezas que tuvieron que volver a prepararse o pintarse en el mes por algún defecto.</div>
             </div>
             <div class="input-wrapper">
                 <span class="input-icon icon-car"></span>
@@ -289,9 +291,8 @@
         <div class="input-group">
             <div class="label-container">
                 <label>3. Costo del Kit de Material por Pieza:</label>
-                <div class="tooltip">i
-                    <span class="tooltip-text">Costo promedio de pintura, barniz, lijas y consumibles utilizados en una sola pieza.</span>
-                </div>
+                <div class="tooltip-btn" onclick="toggleTooltip(this)">i</div>
+                <div class="tooltip-text">Costo promedio de pintura, barniz, lijas y consumibles utilizados en una sola pieza.</div>
             </div>
             <div class="input-wrapper">
                 <span class="input-icon icon-paint"></span>
@@ -302,9 +303,8 @@
         <div class="input-group">
             <div class="label-container">
                 <label>4. Valor promedio de la Hora/Hombre:</label>
-                <div class="tooltip">i
-                    <span class="tooltip-text">El costo real de una hora de tu técnico (incluyendo carga prestacional) o el valor de venta de la hora.</span>
-                </div>
+                <div class="tooltip-btn" onclick="toggleTooltip(this)">i</div>
+                <div class="tooltip-text">El costo real de una hora de tu técnico (incluyendo carga prestacional) o el valor de venta de la hora.</div>
             </div>
             <div class="input-wrapper">
                 <span class="input-icon icon-timer"></span>
@@ -360,6 +360,25 @@
 
         document.getElementById('resultado_fuga').innerText = formatter.format(fugaTotal);
     }
+
+    // Script para hacer que los tooltips funcionen perfecto en celulares
+    function toggleTooltip(element) {
+        // Cierra todos los otros tooltips primero
+        document.querySelectorAll('.tooltip-text').forEach(el => {
+            if (el !== element.nextElementSibling) el.classList.remove('show');
+        });
+        // Alterna el que acabas de tocar
+        element.nextElementSibling.classList.toggle('show');
+    }
+
+    // Cierra el tooltip si tocas cualquier otra parte de la pantalla
+    document.addEventListener('click', function(event) {
+        if (!event.target.classList.contains('tooltip-btn')) {
+            document.querySelectorAll('.tooltip-text').forEach(el => {
+                el.classList.remove('show');
+            });
+        }
+    });
 </script>
 
 </body>
